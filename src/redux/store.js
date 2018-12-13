@@ -6,7 +6,7 @@ import rootReducers from './reducers'
 const loggerMiddleware = createLogger()
 
 const store = createStore(
-    rootReducers, applyMiddleware(loggerMiddleware, thunkMiddleware)
+    rootReducers, applyMiddleware(loggerMiddleware, thunkMiddleware) +  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 
