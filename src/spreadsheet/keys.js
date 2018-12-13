@@ -3,3 +3,4 @@ export const TAB_KEY = 9
 export const ESCAPE_KEY = 27
 export const DELETE_KEY = 46
 export const BACKSPACE_KEY = 8
+export const A_KEY = 65

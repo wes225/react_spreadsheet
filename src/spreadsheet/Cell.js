@@ -1,38 +1,97 @@
-import React, { PureComponent } from 'react'
-import {
-    ENTER_KEY,
-    TAB_KEY,
-    ESCAPE_KEY,
-    DELETE_KEY,
-    BACKSPACE_KEY
-} from './keys'
+import React, {PureComponent} from 'react'
+import {ENTER_KEY} from './keys'
 
-import { saveCase,editCell } from './../redux/actions'
-import { connect } from 'react-redux'
+import {saveCell, editCell, toggleSelectCell, unSelectAll} from './../redux/actions'
+import {connect} from 'react-redux'
 
-class Cell extends PureComponent {
+class Cell extends PureComponent {  
+    handleCellKeyPress = e => {
+        if (e.which === ENTER_KEY){
+                if (this.props.cell.inEdit) {
+                    this
+                        .props
+                        .saveCellContent({
+                            ...this.props.cell,
+                            value: e.target.value,
+                            inEdit: false
+                        })
+                }}
+    }
 
-    handleKeyPress = event => {if (event.which === ENTER_KEY){ (this.props.saveCaseContent({ ...this.props.cell, value: event.target.value, inEdit:false })) } }
-    handleDoubleClick = () => this.props.enterEditContent({ ...this.props.cell, inEdit: true })
-    handleSingleClick = event => console.log(this.props)
+    handleDoubleClick = () => this
+        .props
+        .enterEditContent({
+            ...this.props.cell,
+            inEdit: true
+        })
+    handleSingleClick = (e) => {
+        if (e.ctrlKey) {
+            this
+                .props
+                .toggleSelectContent({
+                    ...this.props.cell,
+                    inEdit: false,
+                    isSelected: !this.props.cell.isSelected
+                })
+        } else {
+            this
+                .props
+                .unSelectAllContent();
+            this
+                .props
+                .toggleSelectContent({
+                    ...this.props.cell,
+                    inEdit: false,
+                    isSelected: !this.props.cell.isSelected
+                })
+        }
+    }
+
     render() {
         return (
-            <td>{
-                (this.props.cell.inEdit)
-                    ? <input type="text" defaultValue={this.props.cell.value} onChange={() => console.log("data changed")} onKeyDown={() => console.log("keydown")}
-                        onKeyPress={this.handleKeyPress} onKeyUp={() => console.log("keyup")} />
-                    : <label  onDoubleClick={this.handleDoubleClick}>{this.props.cell.value}</label>
-            }</td>)
+
+            <td  onKeyPress={this.handleCellKeyPress} style={{
+                width: "50px"
+            }}>{(this.props.cell.inEdit)
+                    ? <input
+                            
+                            style={{
+                            width: "50px"
+                        }}
+                            type="text"
+                            defaultValue={this.props.cell.value}/>
+                    : this.props.cell.isSelected
+                        ? <label
+                               
+                                onClick={this.handleSingleClick}
+                                onDoubleClick={this.handleDoubleClick}
+                                style={{
+                                display: "inline-block",
+                                border: "3px solid black",
+                                width: "100%"
+                            }}>{this.props.cell.value}</label>
+                        : <label
+                            onClick={this.handleSingleClick}
+                            onDoubleClick={this.handleDoubleClick}
+                            style={{
+                            display: "inline-block",
+                            border: "3px solid gray",
+                            width: "100%"
+                        }}>{this.props.cell.value}</label>
+}</td>
+        )
     }
 }
 
-const mapStateToProps = (state,ownProps) =>({
-    cell:state.spreadsheetState.data[ownProps.y][ownProps.x]
-  })
+const mapStateToProps = (state, ownProps) => ({
+    cell: state.spreadsheetState.data[ownProps.y][ownProps.x]
+})
 const mapDispatchToProps = dispatch => {
     return ({
-        saveCaseContent: cell => dispatch(saveCase(cell)),
-        enterEditContent: cell => dispatch(editCell(cell)) 
+        saveCellContent: cell => dispatch(saveCell(cell)),
+        enterEditContent: cell => dispatch(editCell(cell)),
+        toggleSelectContent: cell => dispatch(toggleSelectCell(cell)),
+        unSelectAllContent: () => dispatch(unSelectAll())
     })
 }
 
