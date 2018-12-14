@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import Cell from './Cell'
+import Cell from './CellV2'
 export default class Row extends PureComponent {
   render() {
     return (
