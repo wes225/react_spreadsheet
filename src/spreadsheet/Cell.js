@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React from 'react'
 import {ENTER_KEY, ESCAPE_KEY} from './misc/keys'
 import {
     saveCell,
@@ -10,8 +10,16 @@ import {
 } from './../redux/actions'
 import {connect} from 'react-redux'
 
-class Cell extends PureComponent {
+class Cell extends React.Component {
 
+// Compares Cells 
+isTheSameCell(old,newCell){
+    return (old.value === newCell.value && old.isSelected === newCell.isSelected && old.inEdit === newCell.inEdit && old.tempValue === newCell.tempValue)
+}
+// prevents unecessary re-rendering using the previous func
+shouldComponentUpdate(nextProp){
+    return !this.isTheSameCell(this.props.cell,nextProp.cell)
+}
     handleCellKeyPress = e => {
 
         // To finish; will help editing once a case is selected.
@@ -113,6 +121,7 @@ class Cell extends PureComponent {
             })
     }
     render() {
+        console.log('render')
         return (
             <td onKeyDown={this.handleCellKeyPress}>{(this.props.cell.inEdit)
                     ? <input

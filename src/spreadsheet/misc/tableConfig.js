@@ -1,7 +1,7 @@
 
 // The config of the table that will be created. Size, default values, etc
 
-export const config={columns:10, rows:10, cell:{ isSelected: false,
+export const config={columns:1, rows:10, cell:{ isSelected: false,
             value: "0",
             x: '0',
             y: '0',

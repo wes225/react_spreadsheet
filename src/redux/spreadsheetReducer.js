@@ -15,9 +15,9 @@ import {config} from '../spreadsheet/misc/tableConfig'
 const initializeState = (rows,columns,cell) => {
 
     let table=[];
-     for( let i=0 ; i<columns ;i++){
+     for( let i=0 ; i<rows ;i++){
         let column =[];
-        for (let j=0; j<rows;j++){
+        for (let j=0; j<columns;j++){
             column.push({...cell,tempValue:cell.value,x:j,y:i})
         }
       
