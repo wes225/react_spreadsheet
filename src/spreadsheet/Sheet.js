@@ -1,17 +1,13 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import Row from './Row'
-
-import {A_KEY, DELETE_KEY,BACKSPACE_KEY} from './keys'
-
+import {A_KEY, DELETE_KEY,BACKSPACE_KEY} from './misc/keys'
 import {selectAll, deleteSelectedCells} from './../redux/actions'
+import TableHeader from './misc/TableHeader';
+
+import './css/Sheet.css';
 class Sheet extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      onMouseDown: false
-    }
-  }
+
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress, false);
   }
@@ -20,7 +16,7 @@ class Sheet extends PureComponent {
   }
 
   handleKeyPress = e => {
-    e.preventDefault();
+  
     if (e.ctrlKey) {
       if(e.which===A_KEY) {
           this
@@ -28,7 +24,6 @@ class Sheet extends PureComponent {
             .selectAllContent()
       }
     }
-
     if (e.which === DELETE_KEY || e.which === BACKSPACE_KEY) {
       this
         .props
@@ -39,16 +34,21 @@ class Sheet extends PureComponent {
   render() {
     return (
       <table onKeyDown={this.handleKeyPress}>
+      <thead><TableHeader columns={this.props.data.columns}/></thead>
         <tbody>
+          
           {this
             .props
-            .table
+            .data.table
             .map((row, index) => <Row key={index} y={index} row={row}/>)}
         </tbody>
       </table>
     )
   }
 }
+
+
+
 const mapDispatchToProps = dispatch => {
   return ({
     selectAllContent: () => dispatch(selectAll()),
@@ -56,6 +56,6 @@ const mapDispatchToProps = dispatch => {
   })
 }
 
-const mapStateToProps = (state) => ({table: state.spreadsheetState.data})
+const mapStateToProps = (state) => ({data: state.spreadsheetState})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sheet);
