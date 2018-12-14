@@ -1,5 +1,5 @@
 import React from 'react'
-import {ENTER_KEY, ESCAPE_KEY} from './misc/keys'
+import { ENTER_KEY, ESCAPE_KEY } from './misc/keys'
 import {
     saveCell,
     editCell,
@@ -8,18 +8,18 @@ import {
     cancelEditCellWithSave,
     getWeather
 } from './../redux/actions'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 class Cell extends React.Component {
 
-// Compares Cells 
-isTheSameCell(old,newCell){
-    return (old.value === newCell.value && old.isSelected === newCell.isSelected && old.inEdit === newCell.inEdit && old.tempValue === newCell.tempValue)
-}
-// prevents unecessary re-rendering using the previous func
-shouldComponentUpdate(nextProp){
-    return !this.isTheSameCell(this.props.cell,nextProp.cell)
-}
+    // Compares Cells 
+    isTheSameCell(old, newCell) {
+        return (old.value === newCell.value && old.isSelected === newCell.isSelected && old.inEdit === newCell.inEdit && old.tempValue === newCell.tempValue)
+    }
+    // prevents unecessary re-rendering using the previous func
+    shouldComponentUpdate(nextProp) {
+        return !this.isTheSameCell(this.props.cell, nextProp.cell)
+    }
     handleCellKeyPress = e => {
 
         // To finish; will help editing once a case is selected.
@@ -34,6 +34,7 @@ shouldComponentUpdate(nextProp){
 
             // Get Weather condition
             if (e.which === ENTER_KEY && e.ctrlKey) {
+                if (this.props.cell.x<this.props.totalColumns){
                 this
                     .props
                     .getContentWeather(e.target.value, this.props.cell)
@@ -43,7 +44,7 @@ shouldComponentUpdate(nextProp){
                         ...this.props.cell,
                         value: e.target.value,
                         inEdit: false
-                    })
+                    })}
             }
             // Saves change made to cell
             if (e.which === ENTER_KEY) {
@@ -111,7 +112,7 @@ shouldComponentUpdate(nextProp){
         }
     }
 
-// Saves current input, for when user clicks away to save
+    // Saves current input, for when user clicks away to save
     onInputChange = e => {
         this
             .props
@@ -121,28 +122,28 @@ shouldComponentUpdate(nextProp){
             })
     }
     render() {
-        console.log('render')
         return (
             <td onKeyDown={this.handleCellKeyPress}>{(this.props.cell.inEdit)
-                    ? <input
-                            type="text"
-                            onChange={this.onInputChange}
-                            defaultValue={this.props.cell.value}/>
-                    : this.props.cell.isSelected
-                        ? <label
-                                onClick={this.handleSingleClick}
-                                onDoubleClick={this.handleDoubleClick}
-                                style={{
-                                border: '3px solid rgba(6, 150, 233, 0.815)'
-                            }}>{this.props.cell.value}</label>
-                        : <label onClick={this.handleSingleClick} onDoubleClick={this.handleDoubleClick}>{this.props.cell.value}</label>
-}</td>
+                ? <input
+                    type="text"
+                    onChange={this.onInputChange}
+                    defaultValue={this.props.cell.value} />
+                : this.props.cell.isSelected
+                    ? <label
+                        onClick={this.handleSingleClick}
+                        onDoubleClick={this.handleDoubleClick}
+                        style={{
+                            border: '3px solid rgba(6, 150, 233, 0.815)'
+                        }}>{this.props.cell.value}</label>
+                    : <label onClick={this.handleSingleClick} onDoubleClick={this.handleDoubleClick}>{this.props.cell.value}</label>
+            }</td>
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    cell: state.spreadsheetState.table[ownProps.y][ownProps.x]
+    cell: state.spreadsheetState.table[ownProps.y][ownProps.x],
+    totalColumns:state.spreadsheetState.table[0].length
 })
 const mapDispatchToProps = dispatch => {
     return ({
