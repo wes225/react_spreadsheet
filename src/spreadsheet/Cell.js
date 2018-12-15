@@ -121,6 +121,8 @@ class Cell extends React.Component {
                 tempValue: e.target.value
             })
     }
+
+
     render() {
         return (
             <td onKeyDown={this.handleCellKeyPress}>{(this.props.cell.inEdit)
@@ -133,9 +135,12 @@ class Cell extends React.Component {
                         onClick={this.handleSingleClick}
                         onDoubleClick={this.handleDoubleClick}
                         style={{
-                            border: '3px solid rgba(6, 150, 233, 0.815)'
+                            padding:'5px',
+                            border: '2px solid rgba(6, 150, 233, 0.815)'
                         }}>{this.props.cell.value}</label>
-                    : <label onClick={this.handleSingleClick} onDoubleClick={this.handleDoubleClick}>{this.props.cell.value}</label>
+                    : <label onClick={this.handleSingleClick} onDoubleClick={this.handleDoubleClick}
+                    style={{padding:'5px',
+                            border: '2px solid transparent'}}>{this.props.cell.value}</label>
             }</td>
         )
     }

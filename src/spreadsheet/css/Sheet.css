@@ -27,11 +27,12 @@ table{
 
 label{
     display: inline-block;
-    width: 95%;
-    height:95%;
+    width: 85%;
+    height:100%;
 }
 input{
     display: inline-block;
     width: 95%;
     height:95%;
 }
+
