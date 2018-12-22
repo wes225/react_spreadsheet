@@ -8,12 +8,12 @@ import TableHeader from './misc/TableHeader';
 import './css/Sheet.css';
 class Sheet extends PureComponent {
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyPress, false);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyPress, false);
-  }
+  // componentDidMount() {
+  //   document.addEventListener("keydown", this.handleKeyPress, false);
+  // }
+  // componentWillUnmount() {
+  //   document.removeEventListener("keydown", this.handleKeyPress, false);
+  // }
 
   handleKeyPress = e => {
   
@@ -33,7 +33,8 @@ class Sheet extends PureComponent {
 
   render() {
     return (
-      <table onKeyDown={this.handleKeyPress}>
+      //  onKeyDown={this.handleKeyPress}
+      <table>
       <thead><TableHeader columns={this.props.data.columns}/></thead>
         <tbody>
           

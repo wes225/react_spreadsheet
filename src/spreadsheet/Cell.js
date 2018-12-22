@@ -1,5 +1,5 @@
 import React from 'react'
-import { ENTER_KEY, ESCAPE_KEY } from './misc/keys'
+import {ENTER_KEY, ESCAPE_KEY} from './misc/keys'
 import {
     saveCell,
     editCell,
@@ -8,11 +8,11 @@ import {
     cancelEditCellWithSave,
     getWeather
 } from './../redux/actions'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 class Cell extends React.Component {
 
-    // Compares Cells 
+    // Compares Cells
     isTheSameCell(old, newCell) {
         return (old.value === newCell.value && old.isSelected === newCell.isSelected && old.inEdit === newCell.inEdit && old.tempValue === newCell.tempValue)
     }
@@ -21,9 +21,11 @@ class Cell extends React.Component {
         return !this.isTheSameCell(this.props.cell, nextProp.cell)
     }
     handleCellKeyPress = e => {
+       
 
         // To finish; will help editing once a case is selected.
-        if (this.props.isSelected) {
+        if (this.props.cell.isSelected) {
+        console.log(e)
             this
                 .props
                 .enterEditContent({
@@ -34,17 +36,18 @@ class Cell extends React.Component {
 
             // Get Weather condition
             if (e.which === ENTER_KEY && e.ctrlKey) {
-                if (this.props.cell.x<this.props.totalColumns){
-                this
-                    .props
-                    .getContentWeather(e.target.value, this.props.cell)
-                this
-                    .props
-                    .saveCellContent({
-                        ...this.props.cell,
-                        value: e.target.value,
-                        inEdit: false
-                    })}
+                if (this.props.cell.x < this.props.totalColumns) {
+                    this
+                        .props
+                        .getContentWeather(e.target.value, this.props.cell)
+                    this
+                        .props
+                        .saveCellContent({
+                            ...this.props.cell,
+                            value: e.target.value,
+                            inEdit: false
+                        })
+                }
             }
             // Saves change made to cell
             if (e.which === ENTER_KEY) {
@@ -122,33 +125,36 @@ class Cell extends React.Component {
             })
     }
 
-
     render() {
         return (
-            <td onKeyDown={this.handleCellKeyPress}>{(this.props.cell.inEdit)
-                ? <input
-                    type="text"
-                    onChange={this.onInputChange}
-                    defaultValue={this.props.cell.value} />
-                : this.props.cell.isSelected
-                    ? <label
-                        onClick={this.handleSingleClick}
-                        onDoubleClick={this.handleDoubleClick}
-                        style={{
-                            padding:'5px',
-                            border: '2px solid rgba(6, 150, 233, 0.815)'
-                        }}>{this.props.cell.value}</label>
-                    : <label onClick={this.handleSingleClick} onDoubleClick={this.handleDoubleClick}
-                    style={{padding:'5px',
-                            border: '2px solid transparent'}}>{this.props.cell.value}</label>
-            }</td>
+            <td >{(this.props.cell.inEdit)
+                    ? <input
+                    autoFocus
+                            type="text"
+                             onKeyDown={this.handleCellKeyPress}
+                            onChange={this.onInputChange}
+                            defaultValue={this.props.cell.value}/>
+                    : this.props.cell.isSelected
+                        ? <label
+                                tabIndex={-1}
+                                onKeyDown={this.handleCellKeyPress}
+                                onClick={this.handleSingleClick}
+                                onDoubleClick={this.handleDoubleClick}
+                                style={{
+                                backgroundColor: 'rgba(6, 150, 233, 0.2)'
+                            }}>{this.props.cell.value}</label>
+                        : <label
+                            tabIndex={0}
+                            onClick={this.handleSingleClick}
+                            onDoubleClick={this.handleDoubleClick}>{this.props.cell.value}</label>
+}</td>
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
     cell: state.spreadsheetState.table[ownProps.y][ownProps.x],
-    totalColumns:state.spreadsheetState.table[0].length
+    totalColumns: state.spreadsheetState.table[0].length
 })
 const mapDispatchToProps = dispatch => {
     return ({
