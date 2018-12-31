@@ -1,4 +1,5 @@
 export const TOGGLE_CELL_SELECT = "TOGGLE_CELL_SELECT"
+export const SELECT_CELL = "SELECT_CELL"
 export const SELECT_ALL = "SELECT_ALL";
 export const UNSELECT_ALL = "UNSELECT_ALL";
 export const SAVE_CELL_CONTENT = "SAVE_CELL_CONTENT";
@@ -6,6 +7,8 @@ export const DELETE_SELECTED_CELLS = "DELETE_SELECTED_CELLS";
 export const EDIT_CELL = "EDIT_CELL";
 export const CANCEL_EDIT_CELL = "CANCEL_EDIT_CELL";
 export const EDIT_SELECTED_CELL = "EDIT_SELECTED_CELLS";
+
+
 
 export const saveCell = cell => ({
     type: SAVE_CELL_CONTENT,
@@ -22,9 +25,13 @@ export const cancelEditCellWithSave = (save) => ({
 export const deleteSelectedCells = () => ({
     type: DELETE_SELECTED_CELLS
 });
-export const toggleSelectCell = cell => ({
+export const toggleSelectCell = coord => ({
     type: TOGGLE_CELL_SELECT,
-    cell
+    coord
+})
+export const selectCell = coord => ({
+    type: SELECT_CELL,
+    coord
 })
 export const selectAll = () => ({
     type: SELECT_ALL
@@ -35,6 +42,15 @@ export const unSelectAll = () => ({
 export const editSelected = () => ({
     type: EDIT_SELECTED_CELL
 })
+
+
+export const ON_MOUSE_DOWN ='ON_MOUSE_DOWN';
+export const ON_MOUSE_UP ='ON_MOUSE_UP' ;
+export const MOUSE_ENTER_CELL = 'MOUSE_ENTER_CELL';
+
+export const mouseDown = (cell) => ({type:ON_MOUSE_DOWN, cell:cell})
+export const mouseUp = (cell) => ({type:ON_MOUSE_UP, cell:cell})
+export const mouseEnterCell = (cell) =>({type:MOUSE_ENTER_CELL, cell:cell})
 
 
 // Weather Section
