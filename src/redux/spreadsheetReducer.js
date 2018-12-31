@@ -172,41 +172,90 @@ const mouseEnterCell = (state, action) => {
         return state
     }
 }
-
 const getSelectionSquare = (selectionSquare, newCell) => {
-    
+
     if (Object.keys(selectionSquare).length !== 0) {
         let {
             x0,
             x1,
             y0,
-            y1
+            y1,
+            _x,_y
         } = selectionSquare;
+        if (newCell.x < _x || newCell.y < _y) {
 
+            if (newCell.x <= _x) {
 
-        if (newCell.x <= x0) {
-         
-            x0 = newCell.x
-        }
-        if (newCell.y <= y0) {
-            y0 = newCell.y
-        }
-        if (newCell.x >= x1 || newCell.x<=x1) {
-            x1 = newCell.x
-        }
-        
-        if (newCell.y >= y1 || newCell.y<=y1) {
-            y1 = newCell.y
-        }
-        return { 
-            selectionSquare: {
-                x0:x0,
-                x1:x1,
-                y0:y0,
-                y1:y1
+                x0 = newCell.x
+                x1= _x
+            }
+            if (newCell.y <= y0) {
+                y0 = newCell.y
+                y1 = _y
+            }
+      
+            return {
+                selectionSquare: {
+                    x0: x0,
+                    x1: x1,
+                    y0: y0,
+                    y1: y1,
+                    _x:_x,
+                    _y:_y
+                }
+            }
+            
+        } else if (newCell.x < x0 || newCell.y < y0) {
+
+            if (newCell.x <= _x) {
+
+                x0 = newCell.x
+                
+            }
+            if (newCell.y <= y0) {
+                y0 = newCell.y
+                
+            }
+      
+            return {
+                selectionSquare: {
+                    x0: x0,
+                    x1: x1,
+                    y0: y0,
+                    y1: y1,
+                    _x:_x,
+                    _y:_y
+                }
+            }
+            
+        } else {
+
+            if (newCell.x <= x0) {
+
+                x0 = newCell.x
+            }
+            if (newCell.y <= y0) {
+                y0 = newCell.y
+            }
+            if (newCell.x >= x1 || newCell.x <= x1) {
+                x1 = newCell.x
+            }
+
+            if (newCell.y >= y1 || newCell.y <= y1) {
+                y1 = newCell.y
+            }
+            return {
+                selectionSquare: {
+                   x0: x0,
+                    x1: x1,
+                    y0: y0,
+                    y1: y1,
+                    _x:_x,
+                    _y:_y
+                }
             }
         }
-    } 
+    }
 }
 
 const save = (state, action) => modifyCell(state, action.cell)
@@ -225,7 +274,10 @@ const mouseDown = (state,cell) => (Object.assign({}, { ...state,
                 x0: cell.x,
                 x1: cell.x,
                 y0: cell.y,
-                y1: cell.y
+                y1: cell.y,
+                _x: cell.x,
+                _y: cell.y,
+                
             
         
     }
