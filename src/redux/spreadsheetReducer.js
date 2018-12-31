@@ -182,69 +182,40 @@ const getSelectionSquare = (selectionSquare, newCell) => {
             y1,
             _x,_y
         } = selectionSquare;
-        if (newCell.x < _x || newCell.y < _y) {
-
-            if (newCell.x <= _x) {
-
-                x0 = newCell.x
-                x1= _x
+        if (newCell.x>_x){
+            if(newCell.y<=_y){
+                x0=_x
+                x1=newCell.x
+                y0=newCell.y
+                y1=_y
             }
-            if (newCell.y <= y0) {
-                y0 = newCell.y
-                y1 = _y
-            }
-      
-            return {
-                selectionSquare: {
-                    x0: x0,
-                    x1: x1,
-                    y0: y0,
-                    y1: y1,
-                    _x:_x,
-                    _y:_y
-                }
-            }
-            
-        } else if (newCell.x < x0 || newCell.y < y0) {
-
-            if (newCell.x <= _x) {
-
-                x0 = newCell.x
-                
-            }
-            if (newCell.y <= y0) {
-                y0 = newCell.y
-                
-            }
-      
-            return {
-                selectionSquare: {
-                    x0: x0,
-                    x1: x1,
-                    y0: y0,
-                    y1: y1,
-                    _x:_x,
-                    _y:_y
-                }
-            }
-            
-        } else {
-
-            if (newCell.x <= x0) {
-
-                x0 = newCell.x
-            }
-            if (newCell.y <= y0) {
-                y0 = newCell.y
-            }
-            if (newCell.x >= x1 || newCell.x <= x1) {
-                x1 = newCell.x
+            else{
+                y0=_y
+                x1=newCell.x
+                y1=newCell.y
             }
 
-            if (newCell.y >= y1 || newCell.y <= y1) {
-                y1 = newCell.y
+        }
+        else if(newCell.x<=_x){
+                if(newCell.y<=_y){
+                    x0=newCell.x
+                    x1=_x
+                    y0=newCell.y
+                    y1=_y
             }
-            return {
+            else  {
+                x0=newCell.x
+                x1=_x
+                y1=newCell.y
+            }
+        }
+
+       
+
+
+
+
+        return {
                 selectionSquare: {
                    x0: x0,
                     x1: x1,
@@ -254,7 +225,6 @@ const getSelectionSquare = (selectionSquare, newCell) => {
                     _y:_y
                 }
             }
-        }
     }
 }
 
