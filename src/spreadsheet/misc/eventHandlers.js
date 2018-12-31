@@ -29,7 +29,7 @@ console.log(props)
 
 
      // To finish; will help editing once a case is selected.
-     if (props.cell.isSelected) {
+     if (props.cell.isSelected && !e.ctrlKey) {
          console.log(e)
          props
              .enterEditContent({

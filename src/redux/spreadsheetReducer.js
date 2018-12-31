@@ -194,7 +194,6 @@ const getSelectionSquare = (selectionSquare, newCell) => {
                 x1=newCell.x
                 y1=newCell.y
             }
-
         }
         else if(newCell.x<=_x){
                 if(newCell.y<=_y){
@@ -209,12 +208,6 @@ const getSelectionSquare = (selectionSquare, newCell) => {
                 y1=newCell.y
             }
         }
-
-       
-
-
-
-
         return {
                 selectionSquare: {
                    x0: x0,

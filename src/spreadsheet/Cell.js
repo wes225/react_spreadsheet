@@ -1,5 +1,4 @@
 import React from 'react'
-import {ENTER_KEY, ESCAPE_KEY} from './misc/keys'
 import {
     saveCell,
     editCell,

@@ -26,8 +26,8 @@ handleKeyPress = e => {
 
   render() {
     return (
-      //  onKeyDown={this.handleKeyPress}
-      <table onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
+      
+      <table onKeyDown={this.handleKeyPress}>
       <thead><TableHeader columns={this.props.data.columns}/></thead>
         <tbody>
           
