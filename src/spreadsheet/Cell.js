@@ -12,36 +12,23 @@ import {
     mouseUp
 } from './../redux/actions'
 import {connect} from 'react-redux'
-import {handleSingleClick, handleCellKeyPress, handleDoubleClick, onInputChange} from './misc/eventHandlers'
+import {handleCellKeyPress, handleDoubleClick, onInputChange,handleMouseEnter,
+handleMouseDown,
+handleMouseUp} from './misc/eventHandlers'
 
 class Cell extends React.Component {
 
-    handleSingleClick = e => handleSingleClick(e, this.props)
+    
     handleCellKeyPress = e => handleCellKeyPress(e, this.props)
     handleDoubleClick = e => handleDoubleClick(e, this.props)
     onInputChange = e => onInputChange(e, this.props)
-    handleMouseEnter = () => this
-        .props
-        ._mouseEnter(this.props.cell)
-    handleMouseDown = e => {
-        this
-            .props
-            .d_mouseDown(this.props.cell)
-        handleSingleClick(e, this.props)
-    }
-    handleMouseUp = e => {
-        this
-            .props
-            .d_mouseUp(this.props.cell)
-
-    }
+    handleMouseEnter = e => handleMouseEnter(e, this.props)
+    handleMouseDown = e => handleMouseDown(e, this.props)
+    handleMouseUp = e => handleMouseUp(e, this.props)
     render() {
         return (
             <td
-                x={this.props.x}
-                y={this.props.y}
-                onMouseDown={this.handleMouseDown}
-                onMouseUp={this.handleMouseUp}
+                
                 onMouseEnter={this.handleMouseEnter}>{(this.props.cell.inEdit)
                     ? <input
                             autoFocus
@@ -52,12 +39,15 @@ class Cell extends React.Component {
                     : this.props.cell.isSelected
                         ? <label
                                 tabIndex={-1}
+                                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
                                 onKeyDown={this.handleCellKeyPress}
                                 onDoubleClick={this.handleDoubleClick}
                                 style={{
                                 backgroundColor: 'rgba(6, 150, 233, 0.2)'
                             }}>{this.props.cell.value}</label>
-                        : <label tabIndex={0} onDoubleClick={this.handleDoubleClick}>{this.props.cell.value}</label>
+                        : <label tabIndex={0} onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp} onDoubleClick={this.handleDoubleClick}>{this.props.cell.value}</label>
 }</td>
         )
     }

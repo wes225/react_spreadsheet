@@ -99,7 +99,6 @@ const cancelCellEdit = (state, save) => {
                     } else {
                         return {
                             ...cell,
-                            value: "",
                             tempValue: "",
                             inEdit: false
 

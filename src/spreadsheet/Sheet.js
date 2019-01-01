@@ -3,31 +3,18 @@ import {connect} from 'react-redux'
 import Row from './Row'
 import {A_KEY, DELETE_KEY,BACKSPACE_KEY} from './misc/keys'
 import {selectAll, deleteSelectedCells, toggleSelectCell, selectCell} from './../redux/actions'
+import {handleTableKeyDown} from './misc/eventHandlers'
 import TableHeader from './misc/TableHeader';
 
 import './css/Sheet.css';
 class Sheet extends PureComponent {
 
-handleKeyPress = e => {
-
-  if (e.ctrlKey) {
-    if (e.which === A_KEY) {
-      this
-        .props
-        .selectAllContent()
-    }
-  }
-  if (e.which === DELETE_KEY || e.which === BACKSPACE_KEY) {
-    this
-      .props
-      .deletedSelectedContent({})
-  }
-}
+handleTableKeyDown = e => handleTableKeyDown(e, this.props)
 
   render() {
     return (
       
-      <table onKeyDown={this.handleKeyPress}>
+      <table onKeyDown={this.handleTableKeyDown}>
       <thead><TableHeader columns={this.props.data.columns}/></thead>
         <tbody>
           
@@ -40,7 +27,6 @@ handleKeyPress = e => {
     )
   }
 }
-
 
 
 const mapDispatchToProps = dispatch => {

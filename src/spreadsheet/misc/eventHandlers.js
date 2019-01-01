@@ -1,4 +1,4 @@
- import {ENTER_KEY, ESCAPE_KEY} from './keys'
+ import {ENTER_KEY, ESCAPE_KEY,A_KEY,BACKSPACE_KEY,DELETE_KEY} from './keys'
  
  // Handles selected one or multiple cases.
  export const handleSingleClick = (e, props) => {
@@ -29,7 +29,7 @@ console.log(props)
 
 
      // To finish; will help editing once a case is selected.
-     if (props.cell.isSelected && !e.ctrlKey) {
+     if (props.cell.isSelected && !e.ctrlKey && e.which !== DELETE_KEY) {
          console.log(e)
          props
              .enterEditContent({
@@ -93,3 +93,29 @@ console.log(props)
              tempValue: e.target.value
          })
  }
+
+ export const handleTableKeyDown = (e,props) => {
+
+  if (e.ctrlKey) {
+    if (e.which === A_KEY) {
+     props
+        .selectAllContent()
+    }
+  }
+  if (e.which === DELETE_KEY || e.which === BACKSPACE_KEY) {
+   props
+      .deletedSelectedContent({})
+  }
+}
+
+export const handleMouseEnter = (e, props) => {
+    props._mouseEnter(props.cell)
+}
+export const handleMouseDown = (e, props) => {
+  props.d_mouseDown(props.cell)
+        handleSingleClick(e, props)
+}
+export const handleMouseUp = (e, props) => {
+ props.d_mouseUp(props.cell)
+
+}
