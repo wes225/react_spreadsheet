@@ -2,7 +2,6 @@
  
  // Handles selected one or multiple cases.
  export const handleSingleClick = (e, props) => {
-console.log(props)
      props
          .cancelEditContent(true)
      if (e.ctrlKey) {
@@ -30,7 +29,6 @@ console.log(props)
 
      // To finish; will help editing once a case is selected.
      if (props.cell.isSelected && !e.ctrlKey && e.which !== DELETE_KEY) {
-         console.log(e)
          props
              .enterEditContent({
                  ...props.cell,
