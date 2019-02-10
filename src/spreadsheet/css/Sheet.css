@@ -1,14 +1,19 @@
 
- td, th {
+ td {
   width: 5rem;
   height: 2rem;
   border: 1px solid #ccc;
   text-align: center;
 }
-th {
-  background: lightblue;
+ th {
+  width: 5rem;
+  height: 2rem;
+  border: 1px solid #ccc;
+  text-align: center; 
+   background: lightblue;
   border-color: white;
 }
+
 body {
   padding: 1rem;
     -webkit-user-select: none;
@@ -18,19 +23,19 @@ body {
     user-select: none;
 }
 
-table{
+table {
     border-collapse: collapse;
     border: 1px solid gray;
     table-layout: fixed;
     width:100%;
 }
 
-label{
+label {
     display: inline-block;
     width: 100%;
     height:100%;
 }
-input{
+input {
     display: inline-block;
     width: 100%;
     height:100%;
